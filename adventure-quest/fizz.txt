@@ -1,0 +1,552 @@
+prontera,118,167,5	script	B.O.L.	506,{
+//if(gettimetick(2) - #overheat < (60 * 60 * 7)) {
+//	mes "^0000FF[ Screen ]^000000";
+//	mes "This Panel will overheat if you continue to use it";
+//	mes "come back after 7 Hours";
+//	close;
+//}
+		mes "^FF0000[ Screen ]^000000";
+		mes "^3355FFYou find a screen";
+		mes "with three tiny panels and";
+		mes "a numeric keypad underneath.";
+		mes "As you press one of the";
+		mes "number keys, you hear a";
+		mes "beep as the screen activates.^000000";
+		next;
+		mes "^0000FF[ Screen ]^000000";
+		mes "Please enter a 3 digit";
+		mes "number. Do not use a";
+		mes "single number more than";
+		mes "once or use the number 0.";
+		next;
+		while (1) {
+			set .@yagu100, rand(1,9);
+			set .@yagu10, rand(1,9);
+			set .@yagu1, rand(1,9);
+			if (((.@yagu100 != .@yagu10) && (.@yagu100 != .@yagu1)) && (.@yagu10 != .@yagu1))
+				break;
+		}
+		while (1) {
+			while (1) {
+				input .@input;
+				if (.@input < 100 || .@input > 999) {
+					mes "^0000FF[ Screen ]^000000";
+					mes "Number input";
+					mes "requirement has";
+					mes "not been fulfilled.";
+					mes "Please enter a";
+					mes "3 digit number.";
+					close;
+				}
+				set .@input100, .@input / 100;
+				set .@input10, (.@input % 100) / 10;
+				if (((.@input100 > 0) && (.@input10 > 0)) && (.@input % 10 > 0)) {
+					if (((.@input100 != .@input10) && (.@input100 != .@input % 10)) && (.@input10 != .@input % 10))
+						break;
+					mes "^0000FF[ Screen ]^000000";
+					mes "Violation of number";
+					mes "input parameter. The";
+					mes "number 0 has been input,";
+					mes "or a number has been";
+					mes "input more than once.";
+					next;
+				}
+			}
+
+			set .@retry, .@retry + 1;
+			mes "^0000FF[ Screen ]^000000";
+			mes "You have input...";
+			mes "^0000ff" + .@input100 + "^000000, ^0000ff" + .@input10 + "^000000, ^0000ff" + (.@input % 10) + "^000000";
+			mes " ";
+			mes "Calculating Results...";
+			mes "Please wait a moment...";
+			next;
+			set .@strike, 0;
+			set .@ball, 0;
+			if (.@yagu100 == .@input100) set .@strike, .@strike + 1;
+			if (.@yagu10 == .@input10) set .@strike, .@strike + 1;
+			if (.@yagu1 == .@input % 10) set .@strike, .@strike + 1;
+			if ((.@yagu100 == .@input10) || (.@yagu100 == .@input % 10)) set .@ball, .@ball + 1;
+			if ((.@yagu10 == .@input100) || (.@yagu10 == .@input % 10)) set .@ball, .@ball + 1;
+			if ((.@yagu1 == .@input100) || (.@yagu1 == .@input10)) set .@ball, .@ball + 1;
+			if (.@strike == 3) {
+				mes "^0000FF[ Screen ]^000000";
+				mes "Input number accepted.";
+				mes "^FF0000Access authorized.^000000";
+				next;
+				mes "^FF0000[ Screen ]^000000";
+				mes "^3355FFAfter the screen displays";
+				mes "the access authorization";
+				mes "notice, magical power condenses";
+				mes "and appears on the screen's";
+				mes "surface. An object forms...^000000";
+				next;
+				mes "^FF0000[ Screen ]^000000";
+				mes "^4d4dff A Quest Item appears.^000000";
+				next;
+		menu "Get the item",-,"Leave",N_LEAVE;
+				set @random,rand(1,6);
+
+	getitem 6417,.quantity[@random];
+				set teemo,1;
+				set #overheat,gettimetick(2);
+				specialeffect2 EF_ANGEL;
+				specialeffect2 EF_TRUESIGHT;
+			next;
+				mes "^FF0000[ Screen ]^000000";
+				mes "^4d4dffNow you think to yourself as a great person.";
+				mes "You seen an illusion of light, like when you acquired the quest item.^000000";
+				next;
+				switch(select("Ignore it.:Concentrate on it.")) {
+				case 1:
+					mes "^0000FF[ Screen ]^000000";
+					mes "You decide to ignore it.";
+					close;
+				case 2:
+					mes "^0000FF[ Screen ]^000000";
+					mes "You focus on the light.";
+					mes "Some letters begin to appear...";
+					next;
+					mes "^0000FF[ Screen ]^000000";
+					mes "^b22222Have you talk to Teemo?";
+					mes "I wish to tell you what the problem is, but I won't unveil it so easily.";
+					mes "Here's a hint. Go and find teemo in ^FF0000pay_fild02^000000.";
+					next;
+					mes "^0000FF[ Screen ]^000000";
+					mes "^b22222The reason I came here is...";
+					mes "to find someone.";
+					mes "I a-machine can't understand this...";
+					next;
+					mes "^0000FF[ Screen ]^000000";
+					mes "^b22222When I found him in Payon Fields, I couldn't relax.";
+					mes "The Giant Octopus staying in deep side of ocean dungeon";
+					mes "made me rush through my investigation...";
+					next;
+					mes "^0000FF[ Screen ]^000000";
+					mes "^b22222After confirming his existence, I became blindly obsessed with finding traces of him.";
+					mes "'Him', you ask? he is shaped like a mushroom...";
+					next;
+					mes "^0000FF[ Screen ]^000000";
+					mes "^b22222I followed his traces without knowing that he existed 10 years earlier.";
+					mes "Then I came upon this place.";
+					next;
+					mes "^0000FF[ Screen ]^000000";
+					mes "^b22222This town set up for...^000000";
+					next;
+					mes "^0000FF[ Screen ]^000000";
+					mes "It suddenly shakes, then disappears.";
+					specialeffect2 EF_COMBOATTACK1;
+					close;
+				}
+			}
+
+			else {
+				mes "^0000FF[ Screen ]^000000";
+				mes "*Beeeeep*";
+				mes "Unauthorized";
+				mes "numerical sequence.";
+				next;
+				mes "^0000FF[ Screen ]^000000";
+				mes "Correct number";
+				mes "in correct place";
+				mes "in sequence total: ^FF0000" + .@strike + "^000000";
+				mes " ";
+				mes "Correct number total: ^FF0000" + .@ball + "^000000";
+				next;
+				if (.@retry > 4) {
+					mes "^0000FF[ Screen ]^000000";
+					mes "Correct number";
+					mes "authorization";
+					mes "sequence was...";
+					mes "^ff0000" + .@yagu100 + "^000000, ^ff0000" + .@yagu10 + "^000000, ^ff0000" + .@yagu1 + "^000000";
+					mes "Authorization number";
+					mes "will change upon retry.";
+					close;
+				}
+			}
+		}
+N_LEAVE:
+close;
+
+OnInit:
+	setarray .quantity[0],1,2,3,4,5,10;
+}
+
+
+
+pay_fild02,46,209,5	script	Teemo	518,{
+if(gettimetick(2) - odgnalam < (60 * 60 * 48)) {
+mes "You have been punished";
+mes "for tricking the System";
+mes "Come back again after 48 Hours";
+close;
+
+}
+if (teemo == 0) goto L_NoQuest;
+if (teemo == 1) goto L_YesQuest;
+set map6,getmapusers("1@def01");
+if(map >=1) goto L_cant;
+
+L_NoQuest:
+	mes "^0000FF[ Teemo ]^000000";
+	mes "Captain Teemo on duty!";
+	soundeffect "Teemo.wav",0;
+	emotion e_heh;
+	close;
+
+
+L_cant:
+mes "^0000FF[ Teemo ]^000000";
+mes "Someone is still inside.";
+close;
+
+L_YesQuest:
+if(countitem(6417) >= 1 && countitem(7300) >= 5 && countitem(6153) >= 20) goto L_OkayUsap;
+	mes "^0000FF[ Teemo ]^000000";
+	mes "Captain Teemo on duty!";
+	soundeffect "Teemo.wav",0;
+	emotion e_heh;
+	next;
+	mes "^0000FF[ Teemo ]^000000";
+	mes "It seems that you don't have what i need";
+	mes "^FF0000 1x of Silvervine Fruit^000000!";
+	mes "^FF0000 5 Gemstones^000000!";
+	mes "^FF0000 20 Credits^000000";
+	close;
+
+L_OkayUsap:
+	mes "^0000FF[ Teemo ]^000000";
+	mes "Are you sure you want to slay that Pervert Octopus";
+if (select("Hell, yeah i will:Cancel") == 2) {
+	mes "^0000FF[ Teemo ]^000000";
+	mes "I'm Glad you change your mind";
+	close;
+}
+	mes "^0000FF[ Teemo ]^000000";
+	mes "G..Goodluck..St..Stranger...";
+	warp "1@def01",51,76;
+	set teemo2,teemo2+1;
+	waitingroom "Occupied", 0;
+	hideoffnpc "Teemo#1";
+	close;
+}
+
+
+
+
+1@def01,57,75,5	script	Teemo#1	518,{
+if (teemo2 == 1) goto L_YesQuest;
+
+L_YesQuest:
+if(countitem(6417) >= 1 && countitem(7300) >= 5 && countitem(6153) >= 20) goto L_OkayUsap;
+	mes "^0000FF[ Teemo ]^000000";
+	mes "Captain Teemo on duty!";
+	soundeffect "Teemo.wav",0;
+	emotion e_heh;
+	next;
+	mes "^0000FF[ Teemo ]^000000";
+	mes "It seems that you don't have what i need";
+	mes "^FF0000 1x Silvervine Fruit^000000!";
+	mes "^FF0000 5 Gemstones^000000!";
+	mes "^FF0000 20 Credits^000000";
+	close;
+
+
+L_OkayUsap:
+if(gettimetick(2) - teemotime < (30)) {
+mes "^0000FF[ Teemo ]^000000";
+mes "Wait for 30 Second(s) before talking to me again";
+        attachnpctimer;
+        initnpctimer;
+        npctalk "I cant talk right now, give me 30 Second(s)";
+        end;
+close2;
+OnTimer25000:
+	npctalk "ok, 5 Second(s) more";
+	end;
+OnTimer26000:
+	npctalk "4";
+	end;
+OnTimer27000:
+	npctalk "3";
+	end;
+OnTimer28000:
+	npctalk "2";
+	end;
+OnTimer29000:
+	npctalk "1";
+	end;
+OnTimer30000:
+	stopnpctimer;
+	mes "^0000FF[ Teemo ]^000000";
+	mes "Ok we can talk now...";
+	detachnpctimer;
+}
+
+
+
+	mes "^0000FF[ Teemo ]^000000";
+	mes "Please Register your name for this quest..";
+	input .@name$;
+	if(.@name$ != strcharinfo(0)) {
+	mes "^0000FF[ Teemo ]^000000";
+	mes "Is this really your name?";
+	mes "Check again";
+	set teemotime,gettimetick(2);
+	npctalk "It's either you entered the wrong name or someone already registered their name, please wait for 30 second(s)";
+	goto L_OkayUsap;
+	end;
+	close;
+}
+	attachnpctimer;
+	initnpctimer;
+	mes "^0000FF[ Teemo ]^000000";	
+	mes "Okay, so it's, "+.@name$+". ehh?";
+	next;
+	mes "^0000FF[ Teemo ]^000000";
+	mes "Help me find the ^FF0000 Octopus Hunting Skewer.^000000";
+	mes "in ^0000FFMalangdo Island^000000";
+	sleep2 3000;
+	next;
+	mes "^0000FF[ Teemo ]^000000";
+	mes "Armed and Ready!";
+	mes "Follow Me!";
+	soundeffect "Teemo2.wav",0;
+	hideonnpc "Teemo#1";
+	dispbottom "Click and Follow Teemo";
+	enablenpc "Teemo#2";
+	stopnpctimer;
+	detachnpctimer;
+	close;
+}
+
+1@def01,57,75,5	script	Teemo#2	518,1,7,{
+	if( .b ){ npctalk "Follow Me!!"; end; }
+	set .b, 1;
+	for(set .a,0;.a<getarraysize(.x);set .a,.a+1) {
+		npcwalkto .x[.a],.y[.a];
+		//Other commands go here...
+		while( 1 ){
+			getmapxy(.map$,.x3,.y3,1); sleep 500;
+			getmapxy(.map$,.x2,.y2,1);
+			if(.x3==.x2&&.y3==.y2)
+				if( .x2==.x[.a]&&.y2==.y[.a] )
+					break;
+		}
+		if(!.a) {
+			npctalk "Just Follow Me!";
+			//monster strnpcinfo(4),.x[.a],.y[.a],"Poring",1002,1;
+			//enablenpc strnpcinfo(0);
+		}
+	}
+	npcstop;
+	disablenpc strnpcinfo(0);
+	hideoffnpc "Teemo#3";
+	detachnpctimer;
+	stopnpctimer;
+	set .b, 0;
+	end;
+	OnInit:
+		disablenpc "Teemo#2";
+		npcspeed 200;
+		setarray .x[0],54,55,52,50,50,48,52,50;
+		setarray .y[0],72,66,60,55,46,37,29,22;
+
+
+}
+
+1@def01,46,21,5	script	Teemo#3	518,{
+	mes "^0000FF[ Teemo ]^000000";
+	mes "Hey, ^FF0000"+strcharinfo(0)+"^000000 stay put!";
+	mes "i'll just call my friend ^FF0000Odgnalam^000000";
+	next;
+	mes "^0000FF[ Teemo ]^000000";
+	mes "I'm quite sure he's sleeping around here...";
+	mes "he will help you to go to their island";
+	mes "called, ^0000FFMalangdo^000000";
+	close2;
+	hideonnpc "Teemo#3";
+	sleep2 2000;
+		mapannounce "1@def01","Teemo : Odgnalam!, i bought fish!! come out!", 0;
+	sleep2 2000;
+		mapannounce "1@def01","Teemo : Odgnalam!! Yoohoo!!", 0;
+	sleep2 2000;
+		mes "^0000FF[ Teemo ]^000000";
+		mes "No use...why don't you try to call him out?";
+		close2;
+	sleep2 2000;
+		mapannounce "1@def01",""+strcharinfo(0)+": Odgnalam!! your friend is lying about the fish, and we bought cat food instead!! ",0;
+	sleep2 1500;
+		mes "^0000FF[ Teemo ]^000000";
+		mes "The hell man?";
+		emotion e_omg;
+		close2;
+	sleep 3000;
+		mapannounce "1@def01","Odgnalam : Did somebody said Cat Food?", 0;
+		hideoffnpc "Odgnalam#Izlude";
+		npctalk "There he is!!";
+		end;
+
+
+OnInit:
+hideonnpc "Odgnalam#Izlude";
+hideonnpc "Teemo#3";
+hideonnpc "Teemo#1";
+end;
+}	
+
+
+
+prontera,147,158,5	script	Special Vending Machine	564,{
+	if(countitem(6417) >= 1) goto L_OkayUsap;
+		mes "^0000FF[ Special Vending Machine ]^000000";
+		mes "You don't have the specific item required to use this machine";
+		close;
+
+L_OkayUsap:
+	mes "^0000FF[ Special Vending Machine ]^000000";
+	mes "Welcome";
+	mes "You have a Silvervine Fruit so, you can purchase items from here";
+	next;
+	menu "Octopus Hunting Stick [23 Hours]",-,"Octopus Hunting Stick [3 Days]",L_3D,"Octopus Hunting Stick [7 Days]",L_7D,"Exit",L_EXT;
+	mes "^0000FF[ Special Vending Machine ]^000000";
+	mes "Trade Octopus Hunting Stick[23 Hours]?";
+	mes "for 20 Silvervine Fruit?";
+	if(countitem(6417) >= 20) goto L_OhComp;
+			next;
+			mes "^0000FF[ Special Vending Machine ]^000000";
+			mes "You don't have enough Silvervine!";
+			close;
+L_EXT:
+	close;
+	end;
+
+L_OhComp:
+	next;
+	mes "^0000FF[ Special Vending Machine ]^000000";
+	mes "Are you sure?";
+	if (select("Confirm:Cancel") == 2) {
+	mes "^0000FF[ Special Vending Machine ]^000000";
+	mes "Come Back Again";
+	close;
+}	
+	next;
+	mes "^0000FF[ Special Vending Machine ]^000000";
+	mes "Here you go..";
+	rentitem 6442,82800; //23hours
+	delitem 6417,20;
+	close;
+
+L_3D1:
+	next;
+	mes "^0000FF[ Special Vending Machine ]^000000";
+	mes "Here you go..";
+	rentitem 6442,259200; //3Days
+	delitem 6417,30;
+	close;
+
+L_7D1:
+	next;
+	mes "^0000FF[ Special Vending Machine ]^000000";
+	mes "Here you go..";
+	rentitem 6442,604800; //7Days
+	delitem 6417,40;
+	close;
+
+
+L_3D:
+	next;
+	mes "^0000FF[ Special Vending Machine ]^000000";
+	mes "Trade Octopus Hunting Stick[3 Days]?";
+	mes "for 30 Silvervine Fruit?";
+	if(countitem(6417) >= 30) goto L_3D1;
+			next;
+			mes "^0000FF[ Special Vending Machine ]^000000";
+			mes "You don't have enough Silvervine!";
+			close;
+
+L_7D:
+	next;
+	mes "^0000FF[ Special Vending Machine ]^000000";
+	mes "Trade Octopus Hunting Stick[7 Days]?";
+	mes "for 40 Silvervine Fruit?";
+	if(countitem(6417) >= 40) goto L_7D1;
+			next;
+			mes "^0000FF[ Special Vending Machine ]^000000";
+			mes "You don't have enough Silvervine!";
+			close;
+}
+
+malangdo,75,236,5	script	Dora	716,{
+	if (dora == 1) goto L_DoraQuest;
+	mes "^0000FF[ Dora ]^000000";
+	mes "I'm Dora the so called explorer";
+	emotion e_heh;
+	close;
+
+L_DoraQuest:
+	mes "^0000FF[ Dora ]^000000";
+	mes "I'm Dora the so called explorer";
+	emotion e_heh;
+	next;
+if (select("About the Octopus:punch her") == 2) {
+	mes "^0000FF[ Dora ]^000000";
+	mes "Say Ouch!, in spanish!";
+	close2;
+	mapannounce "malangdo","Dora the so called explorer is punched in the face", 0;
+	sleep2 1000;
+	mapannounce "malangdo","Towns People: YEHEY!!", 0;
+	end;
+}
+	mes "^0000FF[ Dora ]^000000";
+	mes "Hmm..i see, i see..";
+	next;
+	mes "^0000FF[ Dora ]^000000";
+	mes "Fortunately i have the key in this cave";
+	next;
+	mes "^0000FF[ Dora ]^000000";
+	mes "Give me few seconds to look at it";
+	sleep2 3000;
+	next;
+	mes "^0000FF[ Dora ]^000000";
+	mes "Aha! it's here!";
+	mes "Shall we go?";
+if (select("Get Inside:Stay Outside") == 2) {
+	mes "^0000FF[ Dora ]^000000";
+	mes "Why amigo?";
+	close;
+}
+	mes "^0000FF[ Dora ]^000000";
+	mes "Vamonos!";
+	sleep2 2000;
+	warp "mal_dun01",37,233;
+	set dora,0;
+	close;
+}
+	
+mal_dun01	mapflag	nowarp
+mal_dun01	mapflag	nowarpto
+mal_dun01	mapflag	nomemo
+mal_dun01	mapflag	noreturn
+mal_dun01	mapflag	noteleport
+mal_dun01	mapflag	nobranch
+mal_dun01	mapflag	nosave
+
+1@def01	mapflag	nowarp
+1@def01	mapflag	nowarpto
+1@def01	mapflag	nomemo
+1@def01	mapflag	noreturn
+1@def01	mapflag	noteleport
+1@def01	mapflag	nobranch
+1@def01	mapflag	nosave
+
+malangdo	mapflag	nowarp
+malangdo	mapflag	nowarpto
+malangdo	mapflag	nomemo
+malangdo	mapflag	noreturn
+malangdo	mapflag	noteleport
+malangdo	mapflag	nobranch
+malangdo	mapflag	nosave
+malangdo	mapflag	nogo
+
+
