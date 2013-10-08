@@ -1,0 +1,299 @@
+prontera,131,171,5	script	Ryze	823,{
+set map7,getmapusers("2@pump");
+if(gettimetick(2) - noctdead2 < (60 * 60 * 48)) {
+mes "You have been punished";
+mes "for tricking the System";
+mes "Come back again after 48 Hours";
+close;
+
+}
+if(gettimetick(2) - noctdead < (60 * 60 * 12)) {
+mes "^0000FF[ Ryze ]^000000";
+mes "I'm sorry but you have to wait";
+mes "12 Hours until you can do the this Quest again!";
+soundeffect "Ryzezap.wav",0;
+close;
+
+}
+if(map7 >= 1) goto L_cant;
+if(countitem(6024) >= 20 && countitem(7300) >= 5 && countitem(7723) >= 5) goto L_OkayUsap;
+	mes "^0000FF[ Ryze ]^000000";
+	mes "***Can you handle this?***";
+	soundeffect "Ryzehandle.wav",0;
+	showevent 1,0;
+	emotion e_gg;
+	next;
+	mes "^0000FF[ Ryze ]^000000";
+	mes "I need : ";
+	mes "^FF0000 20pcs of 17Carat of Diamonds^000000!";
+	mes "^FF0000 5 Gemstones^000000!";
+	mes "^FF0000 5 Diamonds of Ruin^000000";
+	mes "Bring that back to me so that we can kill Nocturne .";
+	close;
+
+L_cant:
+mes "^0000FF[ Ryze ]^000000";
+mes "The Quest for Nocturne has already occupied";
+mes "Please wait for your turn";
+soundeffect "Ryzezap.wav",0;
+close;
+
+
+L_OkayUsap:
+	mes "^0000FF[ Ryze ]^000000";
+	mes "Zap!";
+	showevent 1,0;
+	soundeffect "Ryzezap.wav",0;
+	next;
+	mes "^0000FF[ Ryze ]^000000";
+	mes "Go with me and let's slay Nocturne";
+if (select("Follow Ryze:Ignore him") == 2) {
+	mes "^0000FF[ Ryze ]^000000";
+	mes "Do whatever you want";
+	close;
+}
+	mes "^0000FF[ Ryze ]^000000";
+	mes "Can you handle this?.";
+	mes "i'll use my teleport to warp us both in his dungeon";
+	soundeffect "Ryzeletsgo.wav",0;
+	sleep2 2000;
+	warp "2@pump",81,80;
+	waitingroom "Occupied", 0;
+	close;
+
+}
+
+2@pump,82,86,5	script	Ryze#1	823,{
+	mes "^0000FF[ Ryze ]^000000";
+	mes "What's that unpleasnt smell!?";
+	mes "ewww...";
+	soundeffect "Ryzeunpleasant.wav",0;
+	next;
+	mes "^0000FF[ Ryze ]^000000";
+	mes "That filthy Nocturne";
+	mes "i'll chant my spell to wake that bastard";
+	mes "";
+	mes "^0000FF[ Ryze ]^000000";
+	mes "Uh Zal Falhar Isko, HabAzAgGaaAk...";
+	dispbottom "Ryze is chanting some magic words";
+	sleep2 5000;
+	mapannounce "2@pump","Nocturne: Embrace the darkness....",0;
+	soundeffect "Nocturne.wav",0;
+	sleep2 3000;
+	sc_start SC_BLIND,1800000,0;
+	sleep2 2000;
+	next;
+	mes "^0000FF[ Ryze ]^000000";
+	mes "Come on Already!.";
+	soundeffect "Ryzecome.wav",0;
+	next;
+	mes "^0000FF[ Ryze ]^000000";
+	mes "Let's force him to get out on his chamber";
+	next;
+	menu "Ok.",L_Yes,"No,Dont!",-;
+	mes "^0000FF[ Ryze ]^000000";
+	mes "EHHH??";
+	close;
+
+OnPCDieEvent:
+getmapxy(.@map$,.@x,.@y,0);
+if(.@map$=="2@pump") {
+dispbottom "You will revive back in Nocturne's Chamber in 3 Second(s)";
+recovery 3,"2@pump";
+sleep2 3000;
+warp "2@pump",83,98;
+sc_start SC_BLIND,1800000,0;
+end;
+
+
+		
+	
+L_Yes:
+	monster "2@pump",124,41,"Chamber's Tower",3504,1,"Ryze#1::OnThisMobDeath2";
+	monster "2@pump",36,40,"Chamber's Tower",3504,1,"Ryze#1::OnThisMobDeath2";
+	monster "2@pump",40,126,"Chamber's Tower",3504,1,"Ryze#1::OnThisMobDeath2";
+	monster "2@pump",120,127,"Chamber's Tower",3504,1,"Ryze#1::OnThisMobDeath2";
+	mapannounce "2@pump","The Chamber's Four Tower has risen from the ground!",0;
+	mes "^0000FF[ Ryze ]^000000";
+	mes "Don't hold me up";
+	hideonnpc "Ryze#1";
+	soundeffect "Ryzedonthold.wav",0;
+	atcommand "@mapflag nomobloot 1";
+	atcommand "@mapflag nomvploot 1";
+	close;
+
+OnThisMobDeath2:
+	set $ToweKilled,$ToweKilled+1;
+	if ($ToweKilled==4) goto OnThisMobDeath03;
+	announce "["+$ToweKilled+" / 4] Chamber Towers",bc_map;
+	end;
+
+OnThisMobDeath03:
+	mapannounce "2@pump","A Wave of Monsters are Coming!",0;
+	dispbottom "Kill the Wave of Monsters a total of : 90";
+	sleep2 3000;
+	mapannounce "2@pump","Nocturne: Cut them from this world!",0;
+	soundeffect "Nocturne2.wav",0;
+	sleep2 5000;
+	monster "2@pump",0,0,"Nocturne's Soldier",1302,20,"Ryze#1::OnThisMobDeath04";
+	monster "2@pump",0,0,"Nocturne's Soldier",1260,20,"Ryze#1::OnThisMobDeath04";
+	monster "2@pump",0,0,"Nocturne's Soldier",1202,30,"Ryze#1::OnThisMobDeath04";
+	monster "2@pump",0,0,"Nocturne's Soldier",2015,20,"Ryze#1::OnThisMobDeath04";
+	end;
+
+OnThisMobDeath04:
+	set $Mobs2Killed,$Mobs2Killed+1;
+	if ($Mobs2Killed==90) goto OnThisMobDeath3;
+	announce "Monsters : ["+$Mobs2Killed+" / 90]",bc_map;
+	end;
+
+OnThisMobDeath3:
+	mapannounce "2@pump","Second Wave of Monsters are Coming!",0;
+	dispbottom "Kill the Second Wave of Monsters a total of : 70";
+	sleep2 3000;
+	mapannounce "2@pump","Nocturne: Are you getting tired? yet?!",0;
+	soundeffect "Nocturne3.wav",0;
+	sleep2 5000;	
+	monster "2@pump",0,0,"Nocturne High Soldier",1272,3,"Ryze#1::OnThisMobDeath05";
+	monster "2@pump",0,0,"Nocturne's Soldier",1870,20,"Ryze#1::OnThisMobDeath05";
+	monster "2@pump",0,0,"Nocturne's Soldier",1869,30,"Ryze#1::OnThisMobDeath05";
+	monster "2@pump",0,0,"Nocturne's Soldier",1867,17,"Ryze#1::OnThisMobDeath05";
+	end;
+
+OnThisMobDeath05:
+	set $Mobs3Killed,$Mobs3Killed+1;
+	if ($Mobs3Killed==70) goto OnThisMobDeath5;
+	announce "Monsters : ["+$Mobs3Killed+" / 70]",bc_map;
+	end;
+
+OnThisMobDeath5:
+	mapannounce "2@pump","The Chamber's Four Tower has risen again from the ground!",0;
+	dispbottom "Destroy again the Chamber's Tower";
+	sleep2 3000;
+	soundeffect "Nocturne4.wav",0;
+	monster "2@pump",124,41,"Chamber's Tower",3504,1,"Ryze#1::OnThisMobDeath06";
+	monster "2@pump",36,40,"Chamber's Tower",3504,1,"Ryze#1::OnThisMobDeath06";
+	monster "2@pump",40,126,"Chamber's Tower",3504,1,"Ryze#1::OnThisMobDeath06";
+	monster "2@pump",120,127,"Chamber's Tower",3504,1,"Ryze#1::OnThisMobDeath06";
+	end;
+
+OnThisMobDeath06:
+	set $Towe2Killed,$Towe2Killed+1;
+	if ($Towe2Killed==4) goto OnThisMobDeath6;
+	announce "["+$Towe2Killed+" / 4] Chamber's Tower",bc_map;
+	end;
+
+OnThisMobDeath6:
+	mapannounce "2@pump","Nocturne: DARKNESS ....",0;
+	dispbottom "The boss has been spawned, find and kill him";
+	soundeffect "Nocturne5.wav",0;
+	sleep2 5000;
+	soundeffect "Nocturne4.wav",0;
+	sleep2 2000;
+	monster "2@pump",0,0,"Nocturne",2255,1,"Ryze#1::OnThisMobDeath7";
+	end;
+
+OnThisMobDeath7:
+	set $NoctKilled,$NoctKilled+1;
+	if ($NoctKilled==1) goto L_AllDead;
+	end;
+
+
+L_AllDead:
+if(countitem(6024) >= 20 && countitem(7300) >= 5 && countitem(7723) >= 5) goto L_OkayGo;
+mapwarp "2@pump","prontera",153,166,0;
+sleep2 3000;
+mes "Wait A Minute...you don't have the items in your inventory";
+mes "As Punishment of BriceRO Tribunal, you will unlock this quest again after 48 Hours";
+		announce "Nocturne's Chamber is now availabe.",bc_blue|bc_all;
+			killmonsterall "2@pump";
+			set $ToweKilled,0;
+			set $Towe2Killed,0;
+			set $Mobs2Killed,0;
+			set $Mobs3Killed,0;
+			set $NoctKilled,0;
+			sc_end SC_BLIND;
+			delwaitingroom "Ryze";
+			hideoffnpc "Ryze#1";
+			atcommand "@mapflag nomobloot 0";
+			atcommand "@mapflag nomvploot 0";
+		announce ""+strcharinfo(0)+", has been punished by the BriceRO Tribunal for tricking the Adventure Quest System",bc_all;
+end;
+close;
+
+L_OkayGo:
+	while (1) {
+		set .@rand, rand(.totalchance);
+		set .@i, 0;
+		while (1) {
+			set .@rand, .@rand - .itemchance[.@i];
+			if ( .@rand < 0 ) break;
+			set .@i, .@i +1 ;
+		}
+		getitem .itemid[.@i], 1;
+		sc_end SC_BLIND;
+		mapannounce "2@pump","Ryze: Good work champ!",0;
+		sleep2 2000;
+		awake "Ryze#1";
+set $ToweKilled,0;
+set $Towe2Killed,0;
+set $Mobs2Killed,0;
+set $Mobs3Killed,0;
+set $NoctKilled,0;
+set noctdead,gettimetick(2);
+		delitem 6024,20;
+		delitem 7723,5;
+		delitem 7300,5;
+		specialeffect2 EF_ANGEL;
+		specialeffect2 EF_TRUESIGHT;
+		dispbottom "In 10 seconds you will warp back in Prontera";
+sleep 9000;
+		mapwarp "2@pump","prontera",153,166,0;
+		announce "Nocturne's Chamber is now availabe.",bc_blue|bc_all;
+		hideoffnpc "Ryze#1";
+		delwaitingroom "Ryze";
+		end;
+	sleep2 1;
+}
+
+OnInit:
+	setarray .itemid, 2480,2891,2475,2574,607,607,607,607,607,607,607,607,15008,607,607,607,607;
+	setarray .itemchance, 5,5,5,5,20,20,20,20,20,20,20,20,5,20,20,20,20;
+	set .itemsize, getarraysize(.itemid);
+	while ( .@i < .itemsize ) {
+		set .totalchance, .totalchance + .itemchance[.@i];
+		set .@i, .@i +1 ;
+	
+		}
+	}
+}
+
+-	script	Dead	-1,{
+OnPCLogoutEvent:
+	if (strcharinfo(3)=="2@pump")
+			announce "Nocturne's Chamber is now availabe.",bc_blue|bc_all;
+			killmonsterall "2@pump";
+			set $ToweKilled,0;
+			set $Towe2Killed,0;
+			set $Mobs2Killed,0;
+			set $Mobs3Killed,0;
+			set $NoctKilled,0;
+			sc_end SC_BLIND;
+			delwaitingroom "Ryze";
+			hideoffnpc "Ryze#1";
+			atcommand "@mapflag nomobloot 0";
+			atcommand "@mapflag nomvploot 0";
+	end;
+}
+
+				
+
+//Mapflags
+
+2@pump	mapflag	nowarp
+2@pump	mapflag	nowarpto
+2@pump	mapflag	nomemo
+2@pump	mapflag	noreturn
+2@pump	mapflag	noteleport
+2@pump	mapflag	nobranch
+2@pump	mapflag	nosave
