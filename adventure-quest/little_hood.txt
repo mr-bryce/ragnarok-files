@@ -1,0 +1,289 @@
+//= Little Red Riding Hood Quest
+//===== By: ==================================================
+//= Made by Bryce
+//= Special thanks to Yukio for the idea.
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rA/eA/Hercules
+//===== Additional Comments: =================================
+//= 1.0 Initial Release
+//= 1.1 Added Kick Players when AFK.
+//= 1.3 Fix Bug where the players are warped out while doing the quest.
+//= 1.4 Added "Reset" menu after completing the quest.
+//= 1.5 Cleaned the script ( half of it is cleaned i guess? )
+//============================================================
+//= DO NOT REMOVE MY CREDITS AND CLAIM MY WORK AS YOURS =====
+
+prontera,95,157,5	script	Mother#1	961,7,7,{
+if(Class==0||BaseLevel<255){
+	mes "^0000FF[ Mother ]^000000";
+	mes "Hi there little Adventurer!";
+	close;
+}
+
+set .@npcname$,"^0000FF[ Mother ]^000000";
+if (little_hood == 0) goto L_NoQuest; 
+if (little_hood == 1) goto L_little_hood_1; 
+goto L_Finish;
+
+L_little_hood_1:
+	if(countitem(20503) >= 1 && countitem(20504) >= 1 && countitem(20505) >= 1) goto L_little_hood_1_c; 
+	mes .@npcname$;
+	mes "That's not it!";
+	mes "Please find traces of her!";
+	emotion e_sob;
+	next;
+	mes .@npcname$;
+	mes "If you forgot what little red brought with her in ^FF0000 pay_fild02^000000...";
+	mes "Take a look on the list again";
+	next;
+	mes .@npcname$;
+	mes "Here's what she bring with her in ^FF0000 pay_fild02^000000";
+	mes "-----------------------------------";
+	mes "^FF0000 1x --> Little Red's Apron^000000";
+	mes "^FF0000 1x --> Little Red's Scarf^000000";
+	mes "^FF0000 1x --> Little Red's Square Bag^000000";
+	close;
+L_little_hood_1_c:
+	mes .@npcname$;
+	mes "These belongs to my child!";
+	mes "Sob...Sob..Sob..";
+	delitem 20503,1;
+	delitem 20504,1;
+	delitem 20505,1;
+	next;
+	mes .@npcname$;
+	mes "I think she's been attacked by the ^FF0000Big Bad Wolf!^000000";
+	next;
+	mes .@npcname$;
+	mes "Please find the ^0000FF Hunter^000000, He is in the Left side of Prontera near West Gate.";
+	mes "Give this^0000FF Silver Bag of Coins^000000 and ^0000FF Golden Apples^000000 to him and he will talk to you.";
+	getitem 676,1;
+	getitem 7793,1;
+	set little_hood,little_hood+1; 
+	close;
+
+L_NoQuest:
+	mes .@npcname$;
+	mes "Hi ^FF0000"+strcharinfo(0)+"^000000, Will you please help me find my precious daughter?";
+	menu "Investigate",-,"Don't Care",L_NoCare;
+	mes .@npcname$;
+	mes "She's been missing since yesterday";
+	next;
+	mes .@npcname$;
+	mes "I ask her to bring some fruits to her sick grandmother in Payon but she's not back until now";
+	next;
+	mes .@npcname$;
+	mes "Please go, maybe you'll find some of my daughter's belongings in ^FF0000 pay_fild02^000000 that's our way to my mother's house";
+	next;
+	mes "Here's what she bring with her";
+	mes "^FF0000 1x --> Little Red's Apron^000000";
+	mes "^FF0000 1x --> Little Red's Scarf^000000";
+	mes "^FF0000 1x --> Little Red's Square Bag^000000";
+	next;
+	mes .@npcname$;
+	mes "Try too look for them";
+	mes "But, i hope you will not find them with her BODY!";
+	mes "Sob...Sob...Sob..";
+	emotion e_sob;
+	set little_hood,1;
+	close;
+
+L_NoCare:
+	next;
+	mes .@npcname$;
+	mes "Sob...Sob..";
+	emotion e_sob;
+	close;
+
+L_Finish:
+	mes .@npcname$;
+	mes "Please find the ^0000FF Hunter^000000, he is in the left side of prontera near West Gate.";
+	mes "Give that^0000FF Golden Apples^000000 and ^0000FF Silver Bag of Coins^000000 to him and he will talk to you.";
+	next;
+	mes .@npcname$;
+	mes "You Already Completed all the Quest from me.";
+	mes "Would you like to repeat my Mother quest all over again?";
+if (select("Yes:Cancel") == 2) {
+	mes .@npcname$;
+	mes "Ok, Bye!";
+	close;
+
+}
+	set little_hood,0;
+	mes .@npcname$;
+	mes "Reseting....";
+	sleep2 5000;
+	mes .@npcname$;
+	mes "Mother Quest for Riding hood has been Reset";
+	close;
+
+OnTouch:
+	if (q_intro == 0) emotion e_gasp;
+	if ((little_hood > 0) && (little_hood <= 1)) emotion e_what;
+	end;
+}
+
+
+
+prontera,41,214,5	script	Hunter#1	821,{
+set map4,getmapusers("moc_fild13");
+
+if(map4 >= 1) goto L_Mayt;
+if(countitem(676) >= 1 && countitem(7793) >= 5 && countitem(969) >= 25) goto L_UsapHunt;
+	mes "^0000FF[ Hunter ]^000000";
+	mes "Bring me this items then talk to me.";
+	mes "^FF0000 1x --> Bag of Silver Coins^000000";
+	mes "^FF0000 5x --> Golden Apple^000000";
+	mes "^FF0000 25x --> Gold^000000";
+	close;
+
+L_Mayt:
+mes "^0000FF[ Hunter ]^000000";
+mes "There's someone inside, wait for your turn";
+mes "Player will be kicked out if he's afk";
+close;
+
+L_UsapHunt:
+	mes "^0000FF[ Hunter ]^000000";
+	mes "Ohh..money!";
+	next;
+	mes "^0000FF[ Hunter ]^000000";
+	mes "Don't tell me that your'e really going to hunt down the Big Bad Wolf?";
+	emotion e_gg;
+	next;
+	mes "^0000FF[ Hunter ]^000000";
+	mes "Ohh well...Do you want me warp you directly to his Hideout?";
+if (select("Go to Bad Wolf's Hideout:Cancel") == 2) {
+	mes "^0000FF[ Hunter ]^000000";
+	mes "What's your problem?";
+	close;
+}
+	mes "^0000FF[ Hunter ]^000000";
+	mes "To it's Hideout!!";
+	warp "moc_fild13",198,337;
+	delitem 7793,5;
+	delitem 969,25;
+	delitem 676,1;
+	waitingroom "Occupied", 0;
+	close;
+}
+
+
+moc_fild13,75,325,5	script	Bad Wolf Minion	427,{
+	mes "^0000FF[ Bad Wolf Minion ]^000000";
+	mes "Hey, What do you want kid?";
+	next;
+	menu "Kick Him",B_nore,"Where is your Boss",-;
+	mes "^0000FF[ Bad Wolf Minion ]^000000";
+	mes "Leave this place if you wan't to live!";
+	close;
+B_nore:
+	mes "^0000FF[ Bad Wolf Minion ]^000000";
+	mes "You ask for it!!! GRRRR...";
+	hideonnpc "Bad Wolf Minion";
+	atcommand "@mapflag nomobloot 1";
+	atcommand "@mapflag nomvploot 1";
+	monster "moc_fild13",74,322,"Big Bad Wolf",3500,1,"Bad Wolf Minion::OnMyMobDead2";
+	end;
+	close;
+
+OnMyMobDead2:
+	set $WolfKilled2,$WolfKilled2+1;
+	if ($WolfKilled2==1) goto T_Boss;
+	end;
+
+T_Boss:
+	announce "[ Big Bad Wolf ] : Curse You!! I'll be Back!!",bc_blue|bc_self;
+	set $WolfKilled2,0;
+	getitem 12573,1;
+	set boss_tpos,1;
+	hideoffnpc "Bad Wolf Guard";
+	end;
+}
+
+moc_fild13,75,325,5	script	Bad Wolf Guard	427,{
+	mes "^0000FF[ Bad Wolf Minion ]^000000";
+	mes "What else do you need?? You've already killed our boss!";
+	next;
+	getitem 607,1;
+	getitem 969,1;
+	getitem 12404,1;
+	getitem 14542,1;
+	getitem 14544,1;
+	mes ""+strcharinfo(0)+"";
+	mes "Where is Little Red Riding Hood!";
+	warp "moc_fild13",32,27;
+	hideoffnpc "Red Riding Hood";
+	close;
+}
+
+moc_fild13,32,27,0	script	Red Riding Hood	960,{
+set .@little$,"^0000FF[ Red Riding Hood ]^000000";
+	mes .@little$;
+	mes "Thanks for rescuing me and retrieving the fruits for my grandmother";
+	emotion e_thx;
+	specialeffect2 EF_ANGEL;
+	specialeffect2 EF_TRUESIGHT;
+	atcommand "@mapflag nomobloot 0";
+	atcommand "@mapflag nomvploot 0";
+	next;
+	mes .@little$;
+	mes "Can you accompany me to my granda's house so I can give these fruits to her?";
+if (select("Okay, Lets Go!:Cancel") == 2) {
+	mes .@little$;
+	mes "What are we waiting for?";
+	close;	
+}
+	mes .@little$;
+	mes "To My Grandma's House!";
+	warp "payon",264,154;
+	delwaitingroom "Hunter#1";
+	hideonnpc "Bad Wolf Guard";
+	hideonnpc "Red Riding Hood";
+	hideoffnpc "Bad Wolf Minion";
+	end;
+	close;
+
+OnInit:
+hideoffnpc "Bad Wolf Minion";
+hideonnpc "Red Riding Hood";
+hideonnpc "Bad Wolf Guard";
+end;
+}
+
+
+payon_in01,101,35,5	script	Grandma	863,{
+if ((MaxWeight-Weight) < 200 || checkweight(1201,1) == 0) {
+		mes "- Wait a moment! -";
+		mes "- Currently you're carrying -";
+		mes "- too many items with you. -";
+		mes "- Please come back later -";
+		mes "- after you put some items into kafra storage. -";
+		close;
+	}
+if(countitem(12573)>=1) goto L_GiveApple;
+set .@grandma$,"^0000FF[ Grandma ]^000000";
+	mes .@grandma$;
+	mes "Ahhhh, it's a Beautiful Morning don't you think?";
+	close;
+L_GiveApple:
+	mes "^0000FF[ Grandma ]^000000";
+	mes "My grandchild told me about your adventures with her";
+	next;
+	mes "^0000FF[ Grandma ]^000000";
+	mes "Thank you for bringing her back";
+	emotion e_thx;
+	specialeffect2 EF_ANGEL;
+	specialeffect2 EF_TRUESIGHT;
+	emotion e_thx;
+	next;
+	mes "^0000FF[ Grandma ]^000000";
+	mes "Accept this as a Gift";
+	getitem 12186,1;
+	delitem 12573,1;
+	warp "prontera",150,174;
+	emotion e_thx;
+	close;
+}
