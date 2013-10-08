@@ -1,0 +1,256 @@
+prontera,127,171,5	script	Draven	828,{
+set map6,getmapusers("dali");
+if(gettimetick(2) - ladydead2 < (60 * 60 * 48)) {
+mes "You have been punished";
+mes "for tricking the System";
+mes "Come back again after 48 Hours";
+close;
+
+}
+if(gettimetick(2) - ladydead < (60 * 60 * 12)) {
+mes "^0000FF[ Draven ]^000000";
+mes "I'm sorry but you have to wait";
+mes "12 Hours until you can do the this Quest again!";
+soundeffect "Draven3.wav",0;
+close;
+
+}
+if(map6 >= 1) goto L_cant;
+if(countitem(6024) >= 10 && countitem(7723) >= 10) goto L_OkayUsap;
+	mes "^0000FF[ Draven ]^000000";
+	mes "Welcome to the League of Draven~";
+	soundeffect "Draven.wav",0;
+	showevent 1,0;
+	emotion e_gg;
+	next;
+	mes "^0000FF[ Draven ]^000000";
+	mes "I need the following : ";
+	mes "^FF0000 10pcs of 17Carat of Diamonds^000000!";
+	mes "^FF0000 10pcs of Diamond Ruin^000000!";
+	mes "";
+	mes "";
+	mes "Your idol Draven needs it kid ^_^ .";
+	close;
+
+L_cant:
+mes "^0000FF[ Draven ]^000000";
+mes "Sorry Kid wait for your turn, someone is still inside.";
+soundeffect "Draven4.wav",0;
+close;
+
+
+L_OkayUsap:
+	mes "^0000FF[ Draven ]^000000";
+	mes "Why, thank you!";
+	showevent 1,0;
+	soundeffect "Draven2.wav",0;
+	next;
+	mes "^0000FF[ Draven ]^000000";
+	mes "Let's go and kick some monster's ass!";
+if (select("Go with Draven:Stay") == 2) {
+	mes "^0000FF[ Draven ]^000000";
+	mes "What's the matter Kid? Getting Scared?";
+	close;
+}
+	mes "^0000FF[ Draven ]^000000";
+	mes "Draven's makin' an exit.";
+	soundeffect "Draven5.wav",0;
+	sleep2 2000;
+	warp "dali",89,97;
+	waitingroom "Occupied", 0;
+	close;
+
+}
+
+dali,91,99,5	script	Draven#1	828,{
+	mes "^0000FF[ Draven ]^000000";
+	mes "Were here kiddo";
+	next;
+	mes "^0000FF[ Draven ]^000000";
+	mes "Hmmm..this place looks familiar";
+	mes "i'll check the place out for a bit";
+	dispbottom "Please wait while Draven is securing the place";
+	sleep2 5000;
+	awake "Draven#1";
+	mapannounce "dali",""+strcharinfo(0)+": Draven where are you??",0;
+	sleep2 2000;
+	awake "Draven#1";
+	next;
+	soundeffect "Draven3.wav",0;
+	mes "^0000FF[ Draven]^000000";
+	mes "Not Draven, Draaaaven.";
+	next;
+	mes "^0000FF[ Draven]^000000";
+	mes "I found it kid, looks like i have to lure first the statues";
+	next;
+	mes "^0000FF[ Draven]^000000";
+	mes "Ready? kiddo?";
+	next;
+	menu "Yes",L_Yes,"Later",-;
+	mes "^0000FF[ Draven ]^000000";
+	mes "If you say so";
+	close;
+
+OnPCDieEvent:
+getmapxy(.@map$,.@x,.@y,0);
+if(.@map$=="dali") {
+dispbottom "You will revive back in Moonlight Lady's Dungeon in 3 Second(s)";
+recovery 3,"dali";
+sleep2 3000;
+warp "dali",89,97;
+end;
+
+
+L_Yes:
+	monster "dali",100,95,"Statue",3503,1,"Draven#1::OnThisMobDeath2";
+	monster "dali",99,94,"Statue",3503,1,"Draven#1::OnThisMobDeath2";
+	monster "dali",98,93,"Statue",3503,1,"Draven#1::OnThisMobDeath2";
+	monster "dali",97,92,"Statue",3503,1,"Draven#1::OnThisMobDeath2";
+	monster "dali",96,91,"Statue",3503,1,"Draven#1::OnThisMobDeath2";
+	monster "dali",95,90,"Statue",3503,1,"Draven#1::OnThisMobDeath2";
+	monster "dali",95,89,"Statue",3503,1,"Draven#1::OnThisMobDeath2";
+	mapannounce "dali","A mysterious barricade appear on the east side",0;
+	mes "^0000FF[ Draven ]^000000";
+	mes "Let's do this";
+	hideonnpc "Draven#1";
+	soundeffect "Draven6.wav",0;
+	close;
+
+OnThisMobDeath2:
+	set $StatKilled,$StatKilled+1;
+	if ($StatKilled==7) goto OnThisMobDeath03;
+	end;
+
+OnThisMobDeath03:
+	monster "dali",78,100,"Statue",3503,1,"Draven#1::OnThisMobDeath04";
+	monster "dali",79,101,"Statue",3503,1,"Draven#1::OnThisMobDeath04";
+	monster "dali",80,102,"Statue",3503,1,"Draven#1::OnThisMobDeath04";
+	monster "dali",81,103,"Statue",3503,1,"Draven#1::OnThisMobDeath04";
+	monster "dali",82,104,"Statue",3503,1,"Draven#1::OnThisMobDeath04";
+	monster "dali",83,105,"Statue",3503,1,"Draven#1::OnThisMobDeath04";
+	monster "dali",84,106,"Statue",3503,1,"Draven#1::OnThisMobDeath04";
+	mapannounce "dali","Another barricade appeared on the west side!",0;
+	soundeffect "Draven7.wav",0;
+	end;
+
+OnThisMobDeath04:
+	set $Stat2Killed,$Stat2Killed+1;
+	if ($Stat2Killed==7) goto OnThisMobDeath3;
+	end;
+
+OnThisMobDeath3:
+	monster "dali",140,121,"Lady's Servant",3001,1,"Draven#1::OnThisMobDeath4";
+	monster "dali",147,83,"Lady's Servant",3001,1,"Draven#1::OnThisMobDeath4";
+	monster "dali",121,52,"Lady's Servant",3001,1,"Draven#1::OnThisMobDeath4";
+	monster "dali",76,57,"Lady's Servant",3001,1,"Draven#1::OnThisMobDeath4";
+	mapannounce "dali","Moonlight Lady: My loyal servants kill those fools!",0;
+	dispbottom "Kill the servants near the portals";
+	end;
+
+OnThisMobDeath4:
+        set $ServaKilled,$ServaKilled+1;
+        if ($ServaKilled==4) goto OnThisMobDeath5;
+	announce "Loyal Servants Killed : ["+$ServaKilled+" / 4]",bc_map;
+        end;
+
+OnThisMobDeath5:
+	mapannounce "dali","Moonlight Lady: Why...YOU!! Taste my WRATH!!",0;
+	soundeffect "Draven9.wav",0;
+	sleep2 3000;
+	monster "dali",113,83,"Vicious Moonlight Lady",3005,1,"Draven#1::OnThisMobDeath6";
+	end;
+
+OnThisMobDeath6:
+	set $QueenKilled,$QueenKilled+1;
+	if ($QueenKilled==1) goto L_AllDead;
+
+
+L_AllDead:
+if(countitem(6024) >= 10 && countitem(7723) >= 10) goto L_OkayGo;
+mapwarp "dali","prontera",153,166,0;
+sleep2 3000;
+mes "Wait A Minute...you don't have the items in your inventory";
+mes "As Punishment of BriceRO Tribunal, you will unlock this quest again after 48 Hours";
+		announce "Draven's Quest is now available.",bc_blue|bc_all;
+		set ladydead2,gettimetick(2);
+		killmonsterall "dali";
+		set $StatKilled,0;
+		set $Stat2Killed,0;
+		set $QueenKilled,0;
+		set $ServaKilled,0;
+		hideoffnpc "Draven#1";
+		delwaitingroom "Draven";
+		announce ""+strcharinfo(0)+", has been punished by the BriceRO Tribunal for tricking the Adventure Quest System",bc_all;
+end;
+close;
+
+L_OkayGo:
+	while (1) {
+		set .@rand, rand(.totalchance);
+		set .@i, 0;
+		while (1) {
+			set .@rand, .@rand - .itemchance[.@i];
+			if ( .@rand < 0 ) break;
+			set .@i, .@i +1 ;
+		}
+		getitem .itemid[.@i], 1;
+		mapannounce "dali","Draven: Nice Work Kid!",0;
+		sleep2 2000;
+		awake "Draven";
+		soundeffect "Draven8.wav",0;
+set $StatKilled,0;
+set $Stat2Killed,0;
+set $QueenKilled,0;
+set $ServaKilled,0;
+set ladydead,gettimetick(2);
+		delitem 6024,10;
+		delitem 7723,10;
+		specialeffect2 EF_ANGEL;
+		specialeffect2 EF_TRUESIGHT;
+		dispbottom "In 10 seconds you will warp back in Prontera";
+sleep 10000;
+		mapwarp "dali","prontera",153,166,0;
+		delwaitingroom "Draven";
+		announce "Draven's Quest is now available.",bc_blue|bc_all;
+		hideoffnpc "Draven#1";
+		end;
+	sleep2 1;
+}
+
+OnInit:
+	setarray .itemid, 2581,15043,15036,2883,15008,607,607,5184,5505,5264,5189,607,607,607,607;
+	setarray .itemchance, 5,5,5,5,5,30,30,30,30,30,30,30,20,20,20;
+	set .itemsize, getarraysize(.itemid);
+	while ( .@i < .itemsize ) {
+		set .totalchance, .totalchance + .itemchance[.@i];
+		set .@i, .@i +1 ;
+	
+		}
+	}
+}
+
+
+-	script	Dead#1	-1,{
+OnPCLogoutEvent:
+	if (strcharinfo(3)=="dali")
+			announce "Draven's Quest is now available.",bc_blue|bc_all;
+			killmonsterall "dali";
+		set $StatKilled,0;
+		set $Stat2Killed,0;
+		set $QueenKilled,0;
+		set $ServaKilled,0;
+		hideoffnpc "Draven#1";
+		delwaitingroom "Draven";
+	end;
+}
+
+
+//Mapflags
+
+dali	mapflag	nowarp
+dali	mapflag	nowarpto
+dali	mapflag	nomemo
+dali	mapflag	noreturn
+dali	mapflag	noteleport
+dali	mapflag	nobranch
+dali	mapflag	nosave
